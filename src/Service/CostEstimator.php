@@ -7,18 +7,15 @@ use KikiCourier\Domain\Package;
 
 class CostEstimator
 {
-    private float $baseDeliveryCost;
-
     public function __construct(
-        float $baseDeliveryCost,
+        private readonly float $baseDeliveryCost,
         private readonly OfferRegistry $offerRegistry,
     ) {
-        $this->baseDeliveryCost = $baseDeliveryCost; // 🔴 don't forget this
     }
 
     public function estimate(Package $package): void
     {
-        // ✅ baseDeliveryCost MUST be included here
+        // base_delivery_cost + weight * 10 + distance * 5
         $deliveryCost = $this->baseDeliveryCost
             + $package->weightKg * 10
             + $package->distanceKm * 5;
